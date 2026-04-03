@@ -62,9 +62,9 @@
                 </div>
             </div>
             
-            <a href="https://www.google.com/maps/search/?api=1&query=Av.+Zumkeller,+154+-+Mandaqui,+São+Paulo+-+SP" target="_blank">
-                <img src="https://i.postimg.cc/mD8p6Y8p/mapa-placeholder.png" alt="Ver no Mapa" class="mapa-img">
-                <div class="text-center small text-primary mt-1">Clique na imagem para abrir o GPS</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Terraço+Festa+Av.+Zumkeller+154+Mandaqui" target="_blank">
+                <img src="https://i.postimg.cc/52MTdRzz/Screenshot-20260403-160612-Firefox.jpg" alt="Abrir no GPS" class="mapa-img">
+                <div class="text-center small text-primary mt-1">Clique no mapa para abrir o GPS 📍</div>
             </a>
         </div>
 
@@ -106,7 +106,7 @@
     </div>
 
     <script>
-        // COLOQUE SUA URL DO GOOGLE SCRIPT ABAIXO
+        // ATENÇÃO: COLA AQUI O TEU LINK DO GOOGLE SCRIPT (/exec)
         const urlGoogleApi = "COLE_AQUI_A_URL_DO_WEB_APP";
 
         function addCampo() {
@@ -134,7 +134,7 @@
             }
 
             btn.disabled = true;
-            btn.innerText = "Enviando...";
+            btn.innerText = "A enviar...";
 
             fetch(urlGoogleApi, {
                 method: 'POST',
@@ -146,7 +146,7 @@
                 document.getElementById('mensagem').classList.remove('hidden');
             })
             .catch(() => {
-                alert("Erro ao salvar. Tente novamente!");
+                alert("Erro ao gravar. Tenta novamente!");
                 btn.disabled = false;
                 btn.innerText = "Gravar Confirmação 🎉";
             });
