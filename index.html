@@ -112,6 +112,9 @@
         }
         .btn-gravar:active { transform: scale(0.95); }
 
+        .error-msg { color: var(--sonic-red); font-size: 0.85rem; font-weight: 600; display: none; margin-top: 5px; }
+        .is-invalid { border-color: var(--sonic-red) !important; background-color: #fff8f8; }
+
         .hidden { display: none; }
     </style>
 </head>
@@ -139,7 +142,7 @@
                 </div>
             </div>
             
-            <a href="https://maps.google.com/?q=Av.+Zumkeller,+154" target="_blank" class="mapa-link">
+            <a href="https://maps.app.goo.gl/YourMapLink" target="_blank" class="mapa-link">
                 <img src="https://i.postimg.cc/52MTdRzz/Screenshot-20260403-160612-Firefox.jpg" class="mapa-img">
                 <div class="text-center small text-primary mt-2 fw-bold">TOQUE PARA ABRIR O GPS 📍</div>
             </a>
@@ -161,13 +164,14 @@
                         <div class="convidado-card">
                             <div class="mb-2" style="position:relative">
                                 <i class="bi bi-person" style="position:absolute; left:12px; top:12px; color:#aaa"></i>
-                                <input type="text" class="form-control form-control-lg nome-convidado" placeholder="Nome Completo" required style="padding-left:40px; border-radius:12px; font-size:1rem;">
+                                <input type="text" class="form-control form-control-lg nome-convidado" placeholder="Nome Completo" style="padding-left:40px; border-radius:12px; font-size:1rem;" oninput="this.classList.remove('is-invalid')">
                             </div>
                             <select class="form-select categoria-idade" style="border-radius:12px;">
                                 <option value="Adultos e adolescentes">Adultos e adolescentes</option>
                                 <option value="Crianças entre 6 e 11 anos">Crianças entre 6 e 11 anos</option>
                                 <option value="Crianças até 5 anos">Crianças até 5 anos</option>
                             </select>
+                            <div class="error-msg" id="erroNome">⚠️ Por favor, digite seu nome.</div>
                         </div>
                     </div>
                     
@@ -201,7 +205,7 @@
             card.innerHTML = `
                 <div class="mb-2" style="position:relative">
                     <i class="bi bi-person" style="position:absolute; left:12px; top:12px; color:#aaa"></i>
-                    <input type="text" class="form-control form-control-lg nome-convidado" placeholder="Nome do Acompanhante" style="padding-left:40px; border-radius:12px; font-size:1rem;">
+                    <input type="text" class="form-control form-control-lg nome-convidado" placeholder="Nome do Acompanhante" style="padding-left:40px; border-radius:12px; font-size:1rem;" oninput="this.classList.remove('is-invalid')">
                 </div>
                 <select class="form-select categoria-idade" style="border-radius:12px;">
                     <option value="Adultos e adolescentes">Adultos e adolescentes</option>
@@ -231,17 +235,32 @@
             const status = document.getElementById('status').value;
             const nomes = document.querySelectorAll('.nome-convidado');
             const categorias = document.querySelectorAll('.categoria-idade');
+            const erroMsg = document.getElementById('erroNome');
             let listaFinal = [];
+            let algumErro = false;
+
             nomes.forEach((input, index) => {
                 const nomeVal = input.value.trim();
                 if(nomeVal !== "") {
                     const infoExtra = status === 'Sim' ? ` [${categorias[index].value}]` : "";
                     listaFinal.push(`${nomeVal}${infoExtra}`);
+                    input.classList.remove('is-invalid');
+                } else if (index === 0) { // Valida apenas o primeiro nome (obrigatório)
+                    input.classList.add('is-invalid');
+                    algumErro = true;
                 }
             });
-            if (listaFinal.length === 0) { alert("Por favor, preencha seu nome."); return; }
+
+            if (algumErro) {
+                erroMsg.style.display = 'block';
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                return;
+            }
+
+            erroMsg.style.display = 'none';
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Enviando...';
+            
             fetch(urlGoogleApi, {
                 method: 'POST',
                 mode: 'no-cors',
