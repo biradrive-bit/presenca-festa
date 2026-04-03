@@ -7,64 +7,67 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
-        :root {
-            --primary-blue: #0A58CA;
-            --action-green: #28a745;
-        }
-        body { 
-            background-color: var(--primary-blue); 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            padding-bottom: 50px; 
-        }
+        :root { --primary-blue: #0A58CA; --action-green: #28a745; }
+        body { background-color: var(--primary-blue); font-family: 'Segoe UI', sans-serif; padding-bottom: 50px; }
+        
         .festa-container { 
-            max-width: 480px; 
-            background: white; 
-            margin: 20px auto;
-            border-radius: 25px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
-            overflow: hidden; 
-            padding-bottom: 30px;
+            max-width: 480px; background: white; margin: 20px auto; 
+            border-radius: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+            overflow: hidden; padding-bottom: 30px; 
         }
+        
         .banner-sonic { width: 100%; height: auto; display: block; }
+        
         .detalhes-section { padding: 20px 25px; border-bottom: 1px solid #eee; }
         .detalhes-header { color: var(--primary-blue); font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; }
+        
         .info-row { display: flex; align-items: flex-start; margin-bottom: 12px; font-size: 0.95rem; }
         .info-row i { color: var(--primary-blue); font-size: 1.2rem; margin-right: 15px; }
+        
         .mapa-img { width: 100%; border-radius: 10px; border: 1px solid #ddd; margin-top: 10px; }
+        
         .rsvp-section { padding: 25px; }
-        .form-label { font-weight: 600; }
-        .convidado-input-group { position: relative; margin-bottom: 10px; }
-        .convidado-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa; }
-        .nome-convidado { padding-left: 45px; border-radius: 10px; }
-        .btn-add { color: var(--primary-blue); border: 2px solid var(--primary-blue); border-radius: 10px; font-weight: 600; background: white; padding: 8px; }
-        .btn-gravar { background-color: var(--action-green); color: white; border: none; border-radius: 15px; font-weight: bold; padding: 15px; font-size: 1.1rem; }
+        .form-label { font-weight: 600; margin-bottom: 8px; display: block; }
+        
+        .convidado-card { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            border-radius: 15px; 
+            margin-bottom: 15px; 
+            border: 1px solid #e9ecef;
+        }
+        
+        .input-container { position: relative; margin-bottom: 10px; }
+        .convidado-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #aaa; }
+        
+        .form-control-lg, .form-select-md { border-radius: 10px; font-size: 0.95rem; }
+        .nome-input { padding-left: 35px; }
+
+        .btn-add { color: var(--primary-blue); border: 2px solid var(--primary-blue); border-radius: 10px; font-weight: 600; background: white; padding: 10px; width: 100%; }
+        .btn-gravar { background-color: var(--action-green); color: white; border: none; border-radius: 15px; font-weight: bold; padding: 15px; font-size: 1.1rem; margin-top: 10px; }
+        
         .hidden { display: none; }
     </style>
 </head>
 <body>
 
     <div class="festa-container">
-        <img src="https://i.postimg.cc/3xc8ZhVw/IMG-20260403-WA0001-2.jpg" alt="Convite Sonic" class="banner-sonic">
+        <img src="https://i.postimg.cc/3xc8ZhVw/IMG-20260403-WA0001-2.jpg" class="banner-sonic">
 
         <div class="detalhes-section">
             <div class="detalhes-header">Confirme sua presença abaixo</div>
-            
             <div class="info-row">
                 <i class="bi bi-calendar3"></i>
                 <div><strong>Data:</strong> Sábado, 02 de Maio às 15:00</div>
             </div>
-
             <div class="info-row">
                 <i class="bi bi-geo-alt-fill"></i>
-                <div>
-                    <strong>Local:</strong> Terraço Festa<br>
-                    Av. Zumkeller, 154 - Mandaqui, SP
-                </div>
+                <div><strong>Local:</strong> Terraço Festa - Av. Zumkeller, 154</div>
             </div>
             
-            <a href="https://www.google.com/maps/search/?api=1&query=Terraço+Festa+Av.+Zumkeller+154+Mandaqui" target="_blank">
-                <img src="https://i.postimg.cc/52MTdRzz/Screenshot-20260403-160612-Firefox.jpg" alt="Abrir no GPS" class="mapa-img">
-                <div class="text-center small text-primary mt-1">Clique no mapa para abrir o GPS 📍</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Av.+Zumkeller,+154+-+Mandaqui" target="_blank">
+                <img src="https://i.postimg.cc/52MTdRzz/Screenshot-20260403-160612-Firefox.jpg" class="mapa-img">
+                <div class="text-center small text-primary mt-1">Clique para abrir o GPS 📍</div>
             </a>
         </div>
 
@@ -79,16 +82,24 @@
                 </div>
 
                 <div id="camposConvidados">
-                    <label class="form-label">Nomes dos Convidados:</label>
+                    <label class="form-label">Quem vai com você?</label>
                     <div id="listaInputs">
-                        <div class="convidado-input-group">
-                            <i class="bi bi-person convidado-icon"></i>
-                            <input type="text" class="form-control form-control-lg nome-convidado" placeholder="1. Seu Nome" required>
+                        <div class="convidado-card">
+                            <div class="input-container">
+                                <i class="bi bi-person convidado-icon"></i>
+                                <input type="text" class="form-control form-control-lg nome-input nome-convidado" placeholder="Nome do Convidado" required>
+                            </div>
+                            <select class="form-select form-select-md categoria-idade">
+                                <option value="Adultos e adolescentes">Adultos e adolescentes</option>
+                                <option value="Crianças entre 6 e 11 anos">Crianças entre 6 e 11 anos</option>
+                                <option value="Crianças até 5 anos">Crianças até 5 anos</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="text-center mt-3 mb-4">
-                        <button type="button" class="btn btn-add btn-sm w-100" onclick="addCampo()">+ Adicionar Acompanhante</button>
-                    </div>
+                    
+                    <button type="button" class="btn btn-add btn-sm mb-4" onclick="addCampo()">
+                        <i class="bi bi-plus-lg"></i> Adicionar Acompanhante
+                    </button>
                 </div>
 
                 <button type="button" id="btnEnviar" class="btn btn-gravar w-100" onclick="enviarParaGoogle()">
@@ -106,16 +117,24 @@
     </div>
 
     <script>
-        // ATENÇÃO: COLA AQUI O TEU LINK DO GOOGLE SCRIPT (/exec)
+        // ATENÇÃO: COLE AQUI A SUA URL DO GOOGLE SCRIPT (/exec)
         const urlGoogleApi = "COLE_AQUI_A_URL_DO_WEB_APP";
 
         function addCampo() {
             const div = document.getElementById('listaInputs');
-            const count = div.querySelectorAll('.convidado-input-group').length + 1;
-            const group = document.createElement('div');
-            group.className = 'convidado-input-group mt-2';
-            group.innerHTML = `<i class="bi bi-person convidado-icon"></i><input type="text" class="form-control form-control-lg nome-convidado" placeholder="${count}. Nome">`;
-            div.appendChild(group);
+            const card = document.createElement('div');
+            card.className = 'convidado-card mt-2';
+            card.innerHTML = `
+                <div class="input-container">
+                    <i class="bi bi-person convidado-icon"></i>
+                    <input type="text" class="form-control form-control-lg nome-input nome-convidado" placeholder="Nome do Acompanhante">
+                </div>
+                <select class="form-select form-select-md categoria-idade">
+                    <option value="Adultos e adolescentes">Adultos e adolescentes</option>
+                    <option value="Crianças entre 6 e 11 anos">Crianças entre 6 e 11 anos</option>
+                    <option value="Crianças até 5 anos">Crianças até 5 anos</option>
+                </select>`;
+            div.appendChild(card);
         }
 
         function toggleCampos(val) {
@@ -125,28 +144,36 @@
         function enviarParaGoogle() {
             const btn = document.getElementById('btnEnviar');
             const status = document.getElementById('status').value;
-            const inputs = document.querySelectorAll('.nome-convidado');
-            const convidados = Array.from(inputs).map(i => i.value.trim()).filter(v => v !== "");
+            const nomes = document.querySelectorAll('.nome-convidado');
+            const categorias = document.querySelectorAll('.categoria-idade');
+            
+            let listaFinal = [];
+            nomes.forEach((input, index) => {
+                const nomeVal = input.value.trim();
+                if(nomeVal !== "") {
+                    listaFinal.push(`${nomeVal} [${categorias[index].value}]`);
+                }
+            });
 
-            if (status === 'Sim' && convidados.length === 0) {
-                alert("Por favor, preencha o seu nome.");
+            if (status === 'Sim' && listaFinal.length === 0) {
+                alert("Por favor, preencha pelo menos um nome.");
                 return;
             }
 
             btn.disabled = true;
-            btn.innerText = "A enviar...";
+            btn.innerText = "Enviando...";
 
             fetch(urlGoogleApi, {
                 method: 'POST',
                 mode: 'no-cors',
-                body: JSON.stringify({ status: status, convidados: convidados })
+                body: JSON.stringify({ status: status, convidados: listaFinal })
             })
             .then(() => {
                 document.getElementById('rsvpForm').classList.add('hidden');
                 document.getElementById('mensagem').classList.remove('hidden');
             })
             .catch(() => {
-                alert("Erro ao gravar. Tenta novamente!");
+                alert("Erro ao salvar. Tente novamente!");
                 btn.disabled = false;
                 btn.innerText = "Gravar Confirmação 🎉";
             });
