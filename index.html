@@ -142,7 +142,7 @@
                 </div>
             </div>
             
-            <a href="https://maps.app.goo.gl/YourMapLink" target="_blank" class="mapa-link">
+            <a href="https://www.google.com/maps/search/?api=1&query=Av.+Zumkeller,+154" target="_blank" class="mapa-link">
                 <img src="https://i.postimg.cc/52MTdRzz/Screenshot-20260403-160612-Firefox.jpg" class="mapa-img">
                 <div class="text-center small text-primary mt-2 fw-bold">TOQUE PARA ABRIR O GPS 📍</div>
             </a>
@@ -245,7 +245,7 @@
                     const infoExtra = status === 'Sim' ? ` [${categorias[index].value}]` : "";
                     listaFinal.push(`${nomeVal}${infoExtra}`);
                     input.classList.remove('is-invalid');
-                } else if (index === 0) { // Valida apenas o primeiro nome (obrigatório)
+                } else if (index === 0) {
                     input.classList.add('is-invalid');
                     algumErro = true;
                 }
