@@ -9,10 +9,6 @@
     <meta property="og:description" content="Confirme sua presença no aniversário dos meninos!">
     <meta property="og:url" content="https://biradrive-bit.github.io/presenca-festa/index2.html">
     <meta property="og:image" content="https://i.postimg.cc/3xc8ZhVw/IMG-20260403-WA0001-2.jpg">
-    <meta property="og:image:secure_url" content="https://i.postimg.cc/3xc8ZhVw/IMG-20260403-WA0001-2.jpg">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
     <meta property="og:type" content="website">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -110,10 +106,10 @@
             box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
             transition: transform 0.2s;
         }
-        .btn-gravar:active { transform: scale(0.95); }
 
-        .error-msg { color: var(--sonic-red); font-size: 0.85rem; font-weight: 600; display: none; margin-top: 5px; }
-        .is-invalid { border-color: var(--sonic-red) !important; background-color: #fff8f8; }
+        /* Estilo da Trava */
+        .is-invalid { border: 2.5px solid var(--sonic-red) !important; background-color: #fff8f8 !important; }
+        .error-msg { color: var(--sonic-red); font-size: 0.85rem; font-weight: 700; display: none; margin-top: 8px; }
 
         .hidden { display: none; }
     </style>
@@ -142,7 +138,7 @@
                 </div>
             </div>
             
-            <a href="https://www.google.com/maps/search/?api=1&query=Av.+Zumkeller,+154" target="_blank" class="mapa-link">
+            <a href="https://www.google.com/maps/search/?api=1&query=Terraço+Festa+Av.+Zumkeller+154+Mandaqui" target="_blank" class="mapa-link">
                 <img src="https://i.postimg.cc/52MTdRzz/Screenshot-20260403-160612-Firefox.jpg" class="mapa-img">
                 <div class="text-center small text-primary mt-2 fw-bold">TOQUE PARA ABRIR O GPS 📍</div>
             </a>
@@ -171,7 +167,6 @@
                                 <option value="Crianças entre 6 e 11 anos">Crianças entre 6 e 11 anos</option>
                                 <option value="Crianças até 5 anos">Crianças até 5 anos</option>
                             </select>
-                            <div class="error-msg" id="erroNome">⚠️ Por favor, digite seu nome.</div>
                         </div>
                     </div>
                     
@@ -179,6 +174,8 @@
                         <i class="bi bi-plus-circle-fill"></i> Adicionar Acompanhante
                     </button>
                 </div>
+
+                <div id="erroGeral" class="error-msg text-center mb-3">⚠️ Por favor, preencha o nome de todos os convidados.</div>
 
                 <button type="button" id="btnEnviar" class="btn btn-gravar w-100" onclick="enviarParaGoogle()">
                     Confirmar Presença 🎉
@@ -235,29 +232,29 @@
             const status = document.getElementById('status').value;
             const nomes = document.querySelectorAll('.nome-convidado');
             const categorias = document.querySelectorAll('.categoria-idade');
-            const erroMsg = document.getElementById('erroNome');
+            const erroGeral = document.getElementById('erroGeral');
+            
             let listaFinal = [];
             let algumErro = false;
 
             nomes.forEach((input, index) => {
                 const nomeVal = input.value.trim();
-                if(nomeVal !== "") {
-                    const infoExtra = status === 'Sim' ? ` [${categorias[index].value}]` : "";
-                    listaFinal.push(`${nomeVal}${infoExtra}`);
-                    input.classList.remove('is-invalid');
-                } else if (index === 0) {
+                if(nomeVal === "") {
                     input.classList.add('is-invalid');
                     algumErro = true;
+                } else {
+                    input.classList.remove('is-invalid');
+                    const infoExtra = status === 'Sim' ? ` [${categorias[index].value}]` : "";
+                    listaFinal.push(`${nomeVal}${infoExtra}`);
                 }
             });
 
             if (algumErro) {
-                erroMsg.style.display = 'block';
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                erroGeral.style.display = 'block';
                 return;
             }
 
-            erroMsg.style.display = 'none';
+            erroGeral.style.display = 'none';
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Enviando...';
             
@@ -269,6 +266,11 @@
             .then(() => {
                 document.getElementById('rsvpForm').classList.add('hidden');
                 document.getElementById('mensagem').classList.remove('hidden');
+            })
+            .catch(() => {
+                alert("Erro ao salvar. Tente novamente!");
+                btn.disabled = false;
+                btn.innerHTML = 'Confirmar Presença 🎉';
             });
         }
     </script>
